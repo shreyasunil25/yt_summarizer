@@ -50,17 +50,18 @@ if 'summary' in st.session_state:
     user_question = st.text_input("Ask something specific (e.g., 'What did he say about pricing?')")
     
     if user_question:
-        if 'transcript' in st.session_state:
-            with st.spinner("Thinking..."):
-                # RAG Logic: Pass the transcript + Question
-                q_prompt = f"""
-                Answer the question based ONLY on the video transcript provided below.
-                
-                TRANSCRIPT:
-                {st.session_state['transcript']}
-                
-                QUESTION:
-                {user_question}
-                """
-                answer = model.generate_content(q_prompt)
-                st.write(answer.text)
+        if st.button("Get Answer"):
+            if 'transcript' in st.session_state:
+                with st.spinner("Thinking..."):
+                    # RAG Logic: Pass the transcript + Question
+                    q_prompt = f"""
+                    Answer the question based ONLY on the video transcript provided below.
+                    
+                    TRANSCRIPT:
+                    {st.session_state['transcript']}
+                    
+                    QUESTION:
+                    {user_question}
+                    """
+                    answer = model.generate_content(q_prompt)
+                    st.write(answer.text)
